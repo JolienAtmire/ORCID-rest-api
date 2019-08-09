@@ -18,11 +18,11 @@ Test, Author::e095211a53a5964eb982c27c55282215::0000-0002-9315-2622
 
 ## Adding Authorities and ORCID IDs through the REST API
 
-Next to viewing authorities and ORCID IDs on an existing item, this patch also makes it possible to add authorities and ORCID IDs to these items through the REST API. To enable this feature, both the PUT and POST endpoint have been updated. 
+Next to viewing authorities and ORCID IDs on an existing item, this patch also makes it possible to add authorities and ORCID IDs to both existing and new items through the REST API. To enable this feature, both the PUT and POST endpoint have been updated. 
 
 ### Adding Authors with a Specified Authority
 
-To update an existing item with an additional author that already has an authority key assigned, the following syntax can be used:
+To update an item with an author that already has an authority key assigned, the following syntax can be used:
 
 ```bash
 {author name}::{authority key}
@@ -38,7 +38,7 @@ In case the authority value that was specified is not found, the author name wil
 
 ### Adding Authors with a Specified ORCID ID
 
-To update an existing item with an additional author and his ORCID ID, the following syntax can be used:
+To update an item with an additional author and his ORCID ID, the following syntax can be used:
 
 ```bash
 {author name}::{ORCID}
@@ -50,11 +50,11 @@ For adding the Test, Author value and his ORCID ID, this would look like this:
 Test, Author::0000-0002-9315-2622
 ```
 
-When the ORCID ID that was specified is not found, the author name and ORCID ID will still be added to the item. A new authority will be created with this ORCID ID. When the ORCID ID is immediately found, on the contrary, DSpace will add the author name, ORCID ID and the existing authority key to the item in question. 
+When the ORCID ID that was specified is not found, the author name and ORCID ID will still be added to the item. A new authority will be created with the author name and this ORCID ID. When the ORCID ID is immediately found, on the contrary, DSpace will add the author name, ORCID ID and the existing authority key to the item in question. 
 
 ### Adding Authors without Authority or ORCID ID Specified
 
-It is also possible to update an existing item with an additional author without specifying that author’s authority key or ORCID ID. In such cases, only the author name is sent in through the REST API. When the API passes on such an author name without any additional information to DSpace, the result will be different depending on the matches DSpace will find on the string name of that author:
+It is also possible to update an item with an additional author without specifying that author’s authority key or ORCID ID. In such cases, only the author name is sent in through the REST API. When the API passes on such an author name without any additional information to DSpace, the result will be different depending on the matches DSpace will find on the string name of that author:
 
 * If an exact string name match is found on an existing authority record that does not have an ORCID, the author will get linked to this existing non-ORCID authority record. Both the author name and his authority key will be added to the item. 
 * If an exact string name match is found on an existing authority record that does have an ORCID, the author will not get linked to the existing ORCID authority. A new non-ORCID authority will be created. The author name and the newly created authority will be added to the item. 
